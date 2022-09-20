@@ -9,8 +9,8 @@ bl_info = {
     "name": "Armature Import Cleanup",
     "description": "Some tools for cleaning up models imported as .FBX or .DAE",
     "author": "Jetpack Crow",
-    "version": (1, 00),
-    "blender": (2, 93, 0),
+    "version": (1, 1),
+    "blender": (3, 3, 0),
     "location": "Object Mode > N Panel > Armature Cleanup",
     "category": "Object",
 }
@@ -780,13 +780,27 @@ class github_link(bpy.types.Operator):
     
     """Check this out for updates or to report any issues you find"""
     bl_idname = "object.autogrip_discussion_link"
-    bl_label = "Github Link"
+    bl_label = "Github Repository"
     
     def execute(self, context):
         
         import webbrowser
         import imp
         webbrowser.open("https://github.com/Jetpack-Crow/Jets-armature-cleanup")  
+        
+        return {'FINISHED'}
+    
+class kofi_link(bpy.types.Operator):
+    
+    """Buy me a coffee?"""
+    bl_idname = "object.kofi_link"
+    bl_label = "Tip Jar"
+    
+    def execute(self, context):
+        
+        import webbrowser
+        import imp
+        webbrowser.open("https://ko-fi.com/jetpackcrow")  
         
         return {'FINISHED'}    
     
@@ -863,12 +877,16 @@ class ArmatureCleanupPanel(bpy.types.Panel):
             row.operator(unmute_shape_keys.bl_idname)
             
             row = layout.row()
+            row.label(text="Links (Open in browser)")
+            
+            row = layout.row()
             row.operator(github_link.bl_idname)
+            row.operator(kofi_link.bl_idname)
 
 classes = [ArmatureCleanupPanel, symmetry_by_name, visibility_to_front, 
     prune_useless_bones, origin_to_root, head_sort, key_sort, hands_sort,
     blends_to_opaque, symmetry_by_position, print_center_bones,
-    remove_useless_groups, mute_shape_keys, unmute_shape_keys, github_link]
+    remove_useless_groups, mute_shape_keys, unmute_shape_keys, github_link, kofi_link]
 
 def register():
     print("registering")
@@ -894,7 +912,6 @@ def register():
 def unregister():
     for c in classes:
         bpy.utils.unregister_class(c)
-    
     
     del bpy.types.Object.sort_key
     del bpy.types.Object.sort_layer
