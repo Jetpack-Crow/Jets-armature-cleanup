@@ -775,6 +775,20 @@ class unmute_shape_keys(bpy.types.Operator):
         
         return {'FINISHED'}
     
+            
+class github_link(bpy.types.Operator):
+    
+    """Check this out for updates or to report any issues you find"""
+    bl_idname = "object.autogrip_discussion_link"
+    bl_label = "Github Link"
+    
+    def execute(self, context):
+        
+        import webbrowser
+        import imp
+        webbrowser.open("https://github.com/Jetpack-Crow/Jets-armature-cleanup")  
+        
+        return {'FINISHED'}    
     
 class ArmatureCleanupPanel(bpy.types.Panel):
     """Creates a Panel in the scene context of the properties editor"""
@@ -847,12 +861,14 @@ class ArmatureCleanupPanel(bpy.types.Panel):
             row.operator(mute_shape_keys.bl_idname)
             
             row.operator(unmute_shape_keys.bl_idname)
-
+            
+            row = layout.row()
+            row.operator(github_link.bl_idname)
 
 classes = [ArmatureCleanupPanel, symmetry_by_name, visibility_to_front, 
     prune_useless_bones, origin_to_root, head_sort, key_sort, hands_sort,
     blends_to_opaque, symmetry_by_position, print_center_bones,
-    remove_useless_groups, mute_shape_keys, unmute_shape_keys]
+    remove_useless_groups, mute_shape_keys, unmute_shape_keys, github_link]
 
 def register():
     print("registering")
